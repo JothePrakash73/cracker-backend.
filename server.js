@@ -625,8 +625,8 @@ const jwt = require("jsonwebtoken");  // JWT auth
 
 // ----------------- Models -----------------
 const Product = require("./models/Product");
-const Order = require("./models/Order");
-const Counter = require("./models/Counter");
+const Order = require("./models/order");
+const Counter = require("./models/counter");
 const User = require("./models/User");
 
 const app = express();

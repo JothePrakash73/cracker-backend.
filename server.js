@@ -620,8 +620,8 @@ const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
-const bcrypt = require("bcryptjs");   // 🔑 Password hashing
-const jwt = require("jsonwebtoken");  // JWT auth
+const bcrypt = require("bcryptjs"); // 🔑 Password hashing
+const jwt = require("jsonwebtoken"); // JWT auth
 
 // ----------------- Models -----------------
 const Product = require("./models/Product");
@@ -645,21 +645,12 @@ if (!fs.existsSync(imagesPath)) fs.mkdirSync(imagesPath, { recursive: true });
 app.use("/images", express.static(imagesPath));
 
 // ----------------- MongoDB -----------------
-// const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/crackerShop";
-
-// mongoose
-//   .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(() => console.log("✅ MongoDB connected"))
-//   .catch((err) => console.error("❌ MongoDB error:", err));
-// const mongoose = require('mongoose');
-
-
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 })
-.then(() => console.log("MongoDB connected"))
-.catch(err => console.error("MongoDB connection error:", err));
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.error("MongoDB connection error:", err));
 
 // ----------------- Helpers -----------------
 const generateBillNumber = (n) => {
@@ -684,8 +675,7 @@ const getNextSequence = async (name = "billIndex") => {
 // ----------------- Multer -----------------
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadsPath),
-  filename: (req, file, cb) =>
-    cb(null, Date.now() + "-" + file.originalname.replace(/\s+/g, "_")),
+  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname.replace(/\s+/g, "_")),
 });
 const upload = multer({ storage });
 
@@ -699,10 +689,9 @@ app.post(
   async (req, res) => {
     try {
       const { name, phone, place, landmark } = req.body;
+
       if (!req.files?.bill || !req.files?.screenshot) {
-        return res
-          .status(400)
-          .json({ success: false, message: "Bill or screenshot missing" });
+        return res.status(400).json({ success: false, message: "Bill or screenshot missing" });
       }
 
       const nextIndex = await getNextSequence("billIndex");
@@ -710,14 +699,12 @@ app.post(
 
       const billFile = req.files.bill[0];
       const screenshotFile = req.files.screenshot[0];
+
       const billPath = `/uploads/${billFile.filename}`;
       const screenshotPath = `/uploads/${screenshotFile.filename}`;
 
       const order = new Order({
-        name,
-        phone,
-        place,
-        landmark,
+        name, phone, place, landmark,
         billIndex: nextIndex,
         billNumber: newBillNumber,
         billPath,
@@ -727,27 +714,10 @@ app.post(
       await order.save();
 
       const adminNumber = process.env.ADMIN_WHATSAPP || "918148842731";
-      const whatsappText = `
-🧨 New CrackerMart Order 🚀
-Bill No: ${newBillNumber} (${nextIndex})
-👤 Name: ${name}
-📞 Phone: ${phone}
-📍 Place: ${place}
-📌 Landmark: ${landmark}
-🧾 Bill: ${req.protocol}://${req.get("host")}${billPath}
-💵 Screenshot: ${req.protocol}://${req.get("host")}${screenshotPath}
-      `.trim();
+      const whatsappText = `🧨 New CrackerMart Order 🚀 Bill No: ${newBillNumber} (${nextIndex}) 👤 Name: ${name} 📞 Phone: ${phone} 📍 Place: ${place} 📌 Landmark: ${landmark} 🧾 Bill: ${req.protocol}://${req.get("host")}${billPath} 💵 Screenshot: ${req.protocol}://${req.get("host")}${screenshotPath}`.trim();
+      const whatsappURL = `https://wa.me/${adminNumber}?text=${encodeURIComponent(whatsappText)}`;
 
-      const whatsappURL = `https://wa.me/${adminNumber}?text=${encodeURIComponent(
-        whatsappText
-      )}`;
-
-      res.json({
-        success: true,
-        whatsappURL,
-        billNumber: newBillNumber,
-        orderId: order._id,
-      });
+      res.json({ success: true, whatsappURL, billNumber: newBillNumber, orderId: order._id });
     } catch (err) {
       console.error("Order upload error:", err);
       res.status(500).json({ success: false, message: err.message });
@@ -1567,139 +1537,84 @@ const products = [
 ];
 
 // ✅ Reset products (wipe + insert fresh)
+// ----------------- Products -----------------
 app.get("/api/reset-products", async (req, res) => {
   try {
     await Product.deleteMany({});
-    await Product.insertMany(products);
-    res.send("✅ Products reset (old ones cleared, new ones inserted).");
+    await Product.insertMany(products || []); // Ensure products array exists
+    res.json({ success: true, message: "✅ Products reset (old cleared, new inserted)" });
   } catch (err) {
     console.error(err);
-    res.status(500).send("❌ Error resetting products.");
+    res.status(500).json({ success: false, message: "❌ Error resetting products" });
   }
 });
 
-// ✅ Fetch products
 app.get("/api/products", async (req, res) => {
   try {
     const items = await Product.find();
     res.json(items);
   } catch (err) {
     console.error("❌ Error fetching products:", err);
-    res.status(500).send("Server error");
+    res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
-// ✅ Count products
 app.get("/api/count", async (req, res) => {
   try {
     const count = await Product.countDocuments();
-    res.send(`Total products in DB: ${count}`);
+    res.json({ total: count });
   } catch (err) {
-    res.status(500).send("Error counting products");
+    res.status(500).json({ success: false, message: "Error counting products" });
   }
 });
 
-// ----------------- Auth: Signup -----------------
+// ----------------- Auth -----------------
 app.post("/api/signup", async (req, res) => {
   try {
-    const { name, phone, email, place, district, password, confirmPassword } =
-      req.body;
+    const { name, phone, email, place, district, password, confirmPassword } = req.body;
 
-    if (
-      !name ||
-      !phone ||
-      !email ||
-      !place ||
-      !district ||
-      !password ||
-      !confirmPassword
-    ) {
-      return res
-        .status(400)
-        .json({ success: false, message: "All fields are required" });
+    if (!name || !phone || !email || !place || !district || !password || !confirmPassword) {
+      return res.status(400).json({ success: false, message: "All fields are required" });
     }
 
     if (password !== confirmPassword) {
-      return res.json({
-        success: false,
-        message: "Passwords do not match",
-      });
+      return res.status(400).json({ success: false, message: "Passwords do not match" });
     }
 
     const existing = await User.findOne({ $or: [{ phone }, { email }] });
-    if (existing) {
-      return res.json({
-        success: false,
-        message: "User already exists",
-      });
-    }
+    if (existing) return res.status(400).json({ success: false, message: "User already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({
-      name,
-      phone,
-      email,
-      place,
-      district,
-      password: hashedPassword,
-    });
-
+    const user = new User({ name, phone, email, place, district, password: hashedPassword });
     await user.save();
-    console.log("✅ User signed up:", { phone, email });
 
-    return res.json({ success: true, message: "Signup successful" });
+    res.json({ success: true, message: "Signup successful" });
   } catch (err) {
     console.error("Signup error:", err);
-    return res
-      .status(500)
-      .json({ success: false, message: err.message });
+    res.status(500).json({ success: false, message: err.message });
   }
 });
 
-// ----------------- Auth: Signin -----------------
 app.post("/api/signin", async (req, res) => {
   try {
     const { phoneOrEmail, password } = req.body;
-    console.log("📩 Signin request:", phoneOrEmail);
 
-    const user = await User.findOne({
-      $or: [{ phone: phoneOrEmail }, { email: phoneOrEmail }],
-    });
-
-    if (!user) {
-      return res.json({
-        success: false,
-        message: "User not found. Please sign up first.",
-      });
-    }
+    const user = await User.findOne({ $or: [{ phone: phoneOrEmail }, { email: phoneOrEmail }] });
+    if (!user) return res.status(400).json({ success: false, message: "User not found" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.json({ success: false, message: "Invalid credentials" });
-    }
+    if (!isMatch) return res.status(400).json({ success: false, message: "Invalid credentials" });
 
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "7d" });
 
-    return res.json({
-      success: true,
-      message: "Signin successful",
-      user: {
-        id: user._id,
-        name: user.name,
-        phone: user.phone,
-        email: user.email,
-      },
-      token,
-    });
+    res.json({ success: true, user: { id: user._id, name: user.name, phone: user.phone, email: user.email }, token });
   } catch (err) {
     console.error("Signin error:", err);
-    return res
-      .status(500)
-      .json({ success: false, message: "Server error" });
+    res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
-// ----------------- Debug Routes -----------------
+// ----------------- Debug -----------------
 app.get("/api/users", async (req, res) => {
   try {
     const users = await User.find().select("-__v -password");
@@ -1717,9 +1632,7 @@ if (process.env.NODE_ENV === "production") {
   const clientBuildPath = path.join(__dirname, "client", "build");
   if (fs.existsSync(clientBuildPath)) {
     app.use(express.static(clientBuildPath));
-    app.get("*", (req, res) =>
-      res.sendFile(path.join(clientBuildPath, "index.html"))
-    );
+    app.get("*", (req, res) => res.sendFile(path.join(clientBuildPath, "index.html")));
   }
 }
 

@@ -625,8 +625,8 @@ const jwt = require("jsonwebtoken");  // JWT auth
 
 // ----------------- Models -----------------
 const Product = require("./models/Product");
-const Order = require("./models/Order");
-const Counter = require("./models/Counter");
+const Order = require("./models/order");
+const Counter = require("./models/counter");
 const User = require("./models/User");
 
 const app = express();
@@ -651,7 +651,8 @@ app.use("/images", express.static(imagesPath));
 //   .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 //   .then(() => console.log("✅ MongoDB connected"))
 //   .catch((err) => console.error("❌ MongoDB error:", err));
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,

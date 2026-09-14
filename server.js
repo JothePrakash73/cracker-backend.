@@ -614,7 +614,11 @@
 // server.js
 // server.js
 // server.js
+require('dotenv').config();
+
 const express = require("express");
+const router = express.Router();
+
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
@@ -645,7 +649,7 @@ if (!fs.existsSync(imagesPath)) fs.mkdirSync(imagesPath, { recursive: true });
 app.use("/images", express.static(imagesPath));
 
 // ----------------- MongoDB -----------------
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -729,31 +733,31 @@ app.post(
 const products = [
   {
     name: "Flower Pots Special",
-    price: 350,
+    price: 415,
     category: "Flower Pots",
     image: "/images/Flowerpotsspecial.jpg",
   },
   {
     name: "Flower Pots Asoka",
-    price: 510,
+    price: 605,
     category: "Flower Pots",
     image: "/images/Flowerpotsasoka.jpg",
   },
     {
     name: "Laddu Color Changes",
-    price: 1900,
+    price: 2025,
     category: "New Novelties",
     image: "/images/Colorchangingladdu.jpg",
   },
       {
     name: "Rio Shrek(Red,Green Shower)",
-    price: 560,
+    price: 670,
     category: "Elite Series",
     image: "/images/Rioshrek.jpg",
   },
    {
     name: " Minions, Emoji (Gold, Silver Shower)",
-    price: 560,
+    price: 670,
     category: "Elite Series",
     image: "/images/Minionsemoji.jpg",
   },
@@ -765,7 +769,7 @@ const products = [
   },
      {
     name: "Koi(5 Pcs)",
-    price: 800,
+    price: 855,
     category: "Mini Aerial Fancy",
     image: "/images/Koi.jpg",
   },
@@ -777,79 +781,74 @@ const products = [
   },
          {
     name: "Wonder Bees",
-    price: 1350,
+    price: 1375,
     category: "Mega Fountains",
     image: "/images/Wonderbees.jpg",
   },
            {
     name: "Silver Bees",
-    price: 1350,
+    price: 1375,
     category: "Mega Fountains",
     image: "/images/Silverbees.jpg",
   },
              {
-    name: "Water Queen (Fava Pot)",
-    price: 750,
+    name: "Water Queen (Fav Pot)",
+    price: 800,
     category: "Mega Fountains",
     image: "/images/Favapot.jpg",
   },
-{
-    name: "Jolly Kola(5Pcs)",
-    price: 680,
-    category: "Mini Aerial Fancy",
-    image: "/images/Jollycola.jpg",
-  },
+
   {
-    name: "Mega Crackling1",
-    price: 600,
+    name: "Mega Crackling",
+    price: 650,
     category: "Mega Fountains",
     image: "/images/Megacrackling.jpg",
   },
   {
     name: "Peacock Meena",
-    price: 980,
+    price: 1090,
     category: "Fountains",
-    image: "/images/Peackockmeena.jpg",
+    image: "/images/peackockmeena.jpg",
   },
   {
     name: "Blooming Volcano",
-    price: 1500,
+    price: 1570,
     category: "Mega Fountains",
     image: "/images/Bloomingvolcano.jpg",
   },
  {
     name: "Holi",
-    price: 640,
+    price: 675,
     category: "Fountains",
     image: "/images/Holi.jpg",
   },
    {
     name: "Popcorn",
-    price: 1050,
+    price: 1155,
     category: "Fountains",
     image: "/images/Popcorn.jpg",
   },
    {
     name: "7Shot(10Pcs)",
-    price: 1080,
+    price: 1220,
     category: "Mini Aerial Fancy",
     image: "/images/7shot.jpg",
   },
   {
     name: "Oreo",
-    price: 280,
+    price: 325,
     category: "Elite Series",
     image: "/images/Oreo.jpg",
   },
   {
     name: "12Cm Pencil",
-    price: 340,
+    price: 415,
     category: "Candles & Twinkling Star",
     image: "/images/Bigcastle.jpg",
   }, 
   {
     name: "Butterfly",
-    price: 470,
+    price: 500,
     category: "Fancy Novelties",
     image: "/images/Butterfly.jpg",
   }, 
@@ -861,13 +860,13 @@ const products = [
   }, 
   {
     name: "Red Bijili(100's)",
-    price: 180,
+    price: 210,
     category: "One Sound Crackers",
     image: "/images/Bijiliyellow.jpg",
   }, 
   {
     name: "Magic Show(money in Bank) (3 Pcs) Mini",
-    price: 510,
+    price: 575,
     category: "Paper Bombs",
     image: "/images/Moneybank.jpg",
   },
@@ -877,12 +876,7 @@ const products = [
     category: "10 cm Sparklers",
     image: "/images/10cmgreen.jpg",
   },
-  {
-    name: "Magic Show(money in Bank) (2 Pcs)",
-    price: 1050,
-    category: "Paper Bombs",
-    image: "/images/Moneybank2.jpg",
-  },
+ 
   {
     name: "30cm Electric Sparklers",
     price: 220,
@@ -891,7 +885,7 @@ const products = [
   },
   {
     name: "30 shot I max",
-    price: 2500,
+    price: 2625,
     category: "Repeating Shots",
     image: "/images/imax30shot.jpg",
   },
@@ -903,169 +897,154 @@ const products = [
   },
   {
     name: "Vonka 12 Shot",
-    price: 1800,
+    price: 2150,
     category: "Repeating Shots",
     image: "/images/Vonka12shot.jpg",
   },
   {
     name: "120 Shot Imax",
-    price: 10000,
+    price: 10500,
     category: "Repeating Shots",
     image: "/images/imax120shot.jpg",
   },
   {
     name: "Rang Jelly",
-    price: 955,
+    price: 1105,
     category: "Flower Pots",
     image: "/images/Rangjelly.jpg",
   },
-{
-    name: "Stunner",
-    price: 520,
-    category: "Fancy Novelties",
-    image: "/images/Stunner.jpg",
-  },
+
   {
     name: "Green Twinkling Star",
-    price: 220,
+    price: 250,
     category: "Candles & Twinkling Star",
     image: "/images/Greentwinklingstar.jpg",
   },
   {
     name: "Rocket Bomb",
-    price: 270,
+    price: 310,
     category: "Rockets",
     image: "/images/Rocketbomb.jpg",
   },  
   {
     name: "Green Bouquet",
-    price: 960,
+    price: 1370,
     category: "Flower Pots",
     image: "/images/Greenbouquet.jpg",
   },
   {
     name: "Hydro Bomb",
-    price: 310,
+    price: 340,
     category: "Atom Bombs",
     image: "/images/Hydrobomb1.jpg",
   },  
   {
     name: "Flower Pot Giant",
-    price: 1020,
+    price: 1155,
     category: "Flower Pots",
     image: "/images/Flowerpotgiant.jpg",
   }, 
-  {
-    name: "Magic Stone",
-    price: 95,
-    category: "Fancy Novelties",
-    image: "/images/Electricstone.jpg",
-  },
+  
   {
     name: "Snake Cartoons(10 Pcs)",
-    price: 200,
+    price: 210,
     category: "Fancy Novelties",
     image: "/images/Snakecartoons.jpg",
   },  
   {
     name: "Greeny Bomb",
-    price: 380,
+    price: 440,
     category: "Atom Bombs",
     image: "/images/Greenybomb.jpg",
   },        
 {
-    name: "Ruby or Meralde",
-    price: 160,
+    name: "Ruby or Emerald",
+    price: 180,
     category: "Fancy Novelties",
     image: "/images/Ruby.jpg",
   },    
   {
     name: "Kango King Bomb",
-    price: 600,
+    price: 735,
     category: "Atom Bombs",
     image: "/images/Kangoking.jpg",
   },  
   {
     name: "Magic Star",
-    price: 110,
+    price: 120,
     category: "Fancy Novelties",
     image: "/images/Magicstar.jpg",
   }, 
   {
     name: "Zig Zag",
-    price: 120,
+    price: 150,
     category: "Fancy Novelties",
     image: "/images/Zigzag.jpg",
   },       
   {
     name: "Baby Rocket",
-    price: 100,
+    price: 210,
     category: "Rockets",
     image: "/images/Babyrocket.jpg",
   },   
   {
     name: "Tri Colour(5 Pcs)",
-    price: 1250,
+    price: 1400,
     category: "Flower Pots",
     image: "/images/Tricolor.jpg",
   },                       
   {
-    name: "Laser Bomb",
-    price: 1050,
+    name: "Lazer Bomb",
+    price: 1360,
     category: "Atom Bombs",
     image: "/images/Laserbomb.jpg",
   },                   
   {
     name: "Colour Blooming",
-    price: 1320,
+    price: 1440,
     category: "Flower Pots",
     image: "/images/Colorbloomy.jpg",
   },                           
 {
     name: "4\"Gold Laxmi",
-    price: 140,
+    price: 155,
     category: "One Sound Crackers",
     image: "/images/Goldlaxmi.jpg",
   },     
   {
     name: "Ground Chakkar Deluxe",
-    price: 555,
+    price: 660,
     category: "Chakkars",
     image: "/images/Chakkardeluxe.jpg",
   }, 
   {
     name: "Ground Chakkar Special",
-    price: 310,
+    price: 360,
     category: "Chakkars",
     image: "/images/Chakkarspecial.jpg",
   },            
   {
     name: "Two Sound Crackers",
-    price: 140,
+    price: 145,
     category: "One Sound Crackers",
     image: "/images/Twosound.jpg",
   },
   {
     name: "Bijili(50's)",
-    price: 100,
+    price: 110,
     category: "One Sound Crackers",
     image: "/images/Bijilismall.jpg",
   },
-  {
-    name: "Bijili(100's)",
-    price: 200,
-    category: "One Sound Crackers",
-    image: "/images/Bijilired2.jpg",
-  },
+  
   {
     name: "4X4 Wheel",
     price: 670,
     category: "Chakkars",
-    image: "/images/4wheel.jpg",
+    image: "/images/4Wheel.jpg",
   },
   {
     name: "Flower Pots Big",
-    price: 280,
+    price: 320,
     category: "Flower Pots",
     image: "/images/Flowerpotbig.jpg",
   },
@@ -1077,51 +1056,45 @@ const products = [
   },
    {
     name: "Tim Tim Laddu",
-    price: 940,
+    price: 1125,
     category: "New Novelties",
     image: "/images/Timtim.jpg",
   },
    {
     name: "Asrafi Laddu",
-    price: 1650,
+    price: 1950,
     category: "New Novelties",
     image: "/images/Ashrafi.jpg",
   },
    {
     name: "Laddu 2 in 1",
-    price: 1800,
+    price: 2100,
     category: "New Novelties",
     image: "/images/2in1laddu.jpg",
   },
    {
     name: "Wizz",
-    price: 540,
+    price: 655,
     category: "Elite Series",
-    image: "/images/Wizz.jpg",
+    image: "/images/wizz.jpg",
   },
    {
     name: "Deluxe Laddu",
-    price: 2400,
+    price: 2880,
     category: "New Novelties",
     image: "/images/Laddudeluxe.jpg",
   },  
    {
     name: "Kinder Joy",
-    price: 540,
+    price: 580,
     category: "Fountains",
     image: "/images/Kinderjoy.jpg",
   },
    {
     name: "Gold Rush",
-    price: 540,
+    price: 580,
     category: "Fountains",
     image: "/images/Goldrush.jpg",
-  },
-   {
-    name: "Tango 1\" Chotta Fancy",
-    price: 285,
-    category: "Mini Aerial Fancy",
-    image: "/images/Tango.jpg",
   },
    {
     name: "Lollipop",
@@ -1131,75 +1104,75 @@ const products = [
   },
    {
     name: "Tango 1\" Chotta Fancy",
-    price: 285,
+    price: 320,
     category: "Mini Aerial Fancy",
     image: "/images/Tango.jpg",
   },
   {
     name: "I cone",
-    price: 925,
+    price: 1000,
     category: "New Arrival",
     image: "/images/Icone.jpg",
   },
   {
     name: "Bimboo(20 Pcs)",
-    price: 700,
+    price: 790,
     category: "Fancy Novelties",
     image: "/images/Bimboo.jpg",
   },
     {
     name: "Drone(5 Pcs)",
-    price: 920,
+    price: 960,
     category: "Fancy Novelties",
     image: "/images/Drone.jpg",
   },
   {
     name: "Helicopter(5 Pcs)",
-    price: 520,
+    price: 550,
     category: "Fancy Novelties",
     image: "/images/Helicopter.jpg",
   },
 {
     name: "Assorted Cartoon(10 Pcs)",
-    price: 150,
+    price: 160,
     category: "Fancy Novelties",
     image: "/images/Assortedcartoon.jpg",
   },
   {
     name: "Bambaram(10 Pcs)",
-    price: 450,
+    price: 475,
     category: "Fancy Novelties",
     image: "/images/Bambaram.jpg",
   },
   {
     name: "Ultra Pencil",
-    price: 265,
+    price: 340,
     category: "Candles & Twinkling Star",
     image: "/images/Ultrapencil.jpg",
   },
   {
     name: "7cm Green Sparklers",
     price: 66,
-    category: "7 cm Green Sparklers",
+    category: "7 cm Sparklers",
     image: "/images/7cmgreen.jpg",
   },
 {
     name: "15cm Green Sparklers",
-    price: 66,
-    category: "15 cm Green Sparklers",
+    price: 260,
+    category: "15 cm Sparklers",
     image: "/images/15cmgreen.jpg",
   },
   {
     name: "10cm Electric Sparklers",
     price: 110,
-    category: "10 cm Electric Sparklers",
-    image: "/images/Helicopter.jpg",
+    category: "10 cm Sparklers",
+    image: "/images/10cmelectric.jpg",
   },
 {
     name: "1 3/4\"Fancy(3Pcs)",
-    price: 1300,
+    price: 1475,
     category: "Aerial Magic Fancy",
-    image: "/images/13/4fancy.jpg",
+    image: "/images/4fancy.jpg",
   },
   {
     name: "VIP Matches",
@@ -1239,19 +1212,19 @@ const products = [
   },
   {
     name: "Sky Scrapper (12 Shot)",
-    price: 1400,
+    price: 1500,
     category: "Repeating Shots",
     image: "/images/Skyscrapper.jpg",
   },
 {
     name: "Rang Chakkar (12 Shot)",
-    price: 1500,
+    price: 1600,
     category: "Repeating Shots",
     image: "/images/Rang.jpg",
   },
 {
     name: "5\"Fancy(2Pcs)",
-    price: 4000,
+    price: 4250,
     category: "Aerial Magic Fancy",
     image: "/images/Rio.jpg",
   },
@@ -1263,8 +1236,8 @@ const products = [
   },
   {
     name: "Midnight Jazz (12 Shot)",
-    price: 960,
-    category: "Repeating shots",
+    price: 1075,
+    category: "Repeating Shots",
     image: "/images/Midnight.jpg",
   },
   {
@@ -1287,19 +1260,19 @@ const products = [
   },
   {
     name: "Musical Siren",
-    price: 950,
+    price: 1115,
     category: "Fancy Novelties",
     image: "/images/Musicalsiren.jpg",
   },
   {
     name: "4\"Twinkling Star",
-    price: 380,
+    price: 420,
     category: "Candles & Twinkling Star",
     image: "/images/4inchsatai.jpg",
   },
   {
     name: "Silver Jet",
-    price: 770,
+    price: 900,
     category: "Rockets",
     image: "/images/Silverjet.jpg",
   },
@@ -1311,25 +1284,25 @@ const products = [
   },
   {
     name: "Thunder Bold Bomb",
-    price: 480,
+    price: 550,
     category: "Atom Bombs",
     image: "/images/Thunderbold.jpg",
   },
 {
     name: "1 1/2\"Twinkling Star",
-    price: 150,
+    price: 165,
     category: "Candles & Twinkling Star",
     image: "/images/halfsatai.jpg",
   },
   {
     name: "Sky Shot(10 Pcs)",
-    price: 500,
+    price: 600,
     category: "Fancy Novelties",
     image: "/images/Skyshot.jpg",
   },
   {
     name: "Bullet Bomb",
-    price: 110,
+    price: 135,
     category: "Atom Bombs",
     image: "/images/Bulletbomb.jpg",
   },
@@ -1341,7 +1314,7 @@ const products = [
   },
   {
     name: "12 Shot",
-    price: 800,
+    price: 900,
     category: "Repeating Shots",
     image: "/images/Rockstar.jpg",
   },
@@ -1359,138 +1332,123 @@ const products = [
   },
   {
     name: "Vonka 24 Shot",
-    price: 3600,
+    price: 4050,
     category: "Repeating Shots",
     image: "/images/vonka24.jpg",
   },
-  {
-    name: "Dhandayutham",
-    price: 925,
-    category: "New Arrival",
-    image: "/images/Dan.jpg",
-  },
-  {
-    name: "Vajrayutham",
-    price: 925,
-    category: "New Arrival",
-    image: "/images/Van.jpg",
-  },
+ 
+  
   {
     name: "2 3/4 Kuruvi",
-    price: 40,
+    price: 45,
     category: "One Sound Crackers",
     image: "/images/Kuruvi.jpg",
   },
   {
     name: "Dancing Wheel",
-    price: 390,
+    price: 420,
     category: "Chakkars",
     image: "/images/Dancing.jpg",
   },
   {
     name: "Ground Chakkar Big (25 Pcs)",
-    price: 340,
+    price: 360,
     category: "Chakkars",
     image: "/images/Chakkarbig25.jpg",
   },
 {
     name: "4\"Ganapathy",
-    price: 155,
+    price: 170,
     category: "One Sound Crackers",
     image: "/images/Ganpath.jpg",
   },
   {
     name: "Fuji Candles",
-    price: 680,
+    price: 810,
     category: "Candles & Twinkling Star",
     image: "/images/Fuji.jpg",
   },
   {
     name: "Strom Super Deluxe",
-    price: 205,
+    price: 230,
     category: "One Sound Crackers",
-    image: "/images/Strom.jpg",
+    image: "/images/Storm.jpg",
   },
   {
     name: "Flower Pots Small",
-    price: 230,
+    price: 270,
     category: "Flower Pots",
     image: "/images/Flowerpotsmall.jpg",
   },
   {
     name: "Ground Chakkar Big (10 Pcs)",
-    price: 150,
+    price: 175,
     category: "Chakkars",
     image: "/images/Chakkarbig.jpg",
   },
   {
     name: "4\"Deluxe Laxmi",
-    price: 140,
+    price: 150,
     category: "One Sound Crackers",
     image: "/images/4deluxe.jpg",
   },
   {
     name: "4\"Laxmi",
-    price: 85,
+    price: 90,
     category: "One Sound Crackers",
     image: "/images/4laxmi.jpg",
   },
   {
     name: "Colour Paper Bomb",
-    price: 330,
-    category: "Paper Bomb",
-    image: "/images/colorpaperbomb.jpg",
+    price: 350,
+    category: "Paper Bombs",
+    image: "/images/colorpaparbomb.jpg",
   },
 {
     name: "Jot Down(3Pcs)",
-    price: 580,
+    price: 725,
     category: "Candles & Twinkling Star",
     image: "/images/Jotdown.jpg",
   },
   {
     name: "Chakkar Spinner Special",
-    price: 500,
+    price: 525,
     category: "Chakkars",
     image: "/images/Spinnerspecial.jpg",
   },
   {
-    name: "Tin",
-    price: 490,
+    name: "Tin Beer",
+    price: 500,
     category: "Fancy Novelties",
     image: "/images/Tin.jpg",
   },
   {
     name: "2 1/2 \" Fancy(1Pcs)",
-    price: 1030,
+    price: 1100,
     category: "Aerial Magic Fancy",
     image: "/images/2halfinch.jpg",
   },
   {
     name: "4\" Fancy (1 Pcs)",
-    price: 1500,
+    price: 1715,
     category: "Aerial Magic Fancy",
     image: "/images/4inch.jpg",
   },
   {
     name: "3\" Fancy (1 Pcs)",
-    price: 1325,
+    price: 1500,
     category: "Aerial Magic Fancy",
     image: "/images/3inch.jpg",
   },
+  
   {
-    name: "6 in 1 King",
-    price: 290,
-    category: "Color Matches",
-    image: "/images/6in1.jpg",
-  },
-  {
-    name: "Rotating Sparklers",
-    price: 900,
+    name: "Rotating Sparklers(30 cm)",
+    price: 1200,
     category: "Sparklers",
     image: "/images/rotating.jpg",
   },
   {
-    name: "10 Shot (Hand Held) New Arrival",
+    name: "10 Shot (Hand Held)",
     price: 2000,
     category: "Repeating Shots",
     image: "/images/10in1.jpg",
@@ -1503,13 +1461,13 @@ const products = [
   },
   {
     name: "4\" Fancy Double Ball",
-    price: 2100,
+    price: 2500,
     category: "Aerial Magic Fancy",
     image: "/images/Doubleball.jpg",
   },
   {
     name: "5\"Fancy",
-    price: 2000,
+    price: 2125,
     category: "Aerial Magic Fancy",
     image: "/images/5inch.jpg",
   },
@@ -1520,19 +1478,349 @@ const products = [
     image: "/images/7step.jpg",
   },
   {
-    name: "Paper Bomb(Small)",
-    price: 530,
+    name: "Paper Bomb",
+    price: 310,
     category: "Paper Bombs",
-    image: "/images/250g.jpg",
+    image: "/images/Paperbomb.jpg",
   },
   {
     name: "Classic 5 in 1",
-    price: 550,
+    price: 575,
     category: "Color Matches",
-    image: "/images/Classic5in1.jpg",
+    image: "/images/classic5in1.jpg",
+  },
+  {
+    name: "30 Shot",
+    price: 2000,
+    category: "Shots",
+    image: "/images/30shot.jpg",
+  },
+  {
+    name: "60 Shot",
+    price: 4000,
+    category: "Shots",
+    image: "/images/60shot.jpg",
+  },
+  {
+    name: "120 Shot",
+    price: 8000,
+    category: "Shots",
+    image: "/images/120shot.jpg",
+  },
+  {
+    name: "240 Shot",
+    price: 16000,
+    category: "Shots",
+    image: "/images/240shot.jpg",
+  },
+  {
+    name: "Wire Chakkars Special",
+    price: 755,
+    category: "Chakkars",
+    image: "/images/Wirechakkar.jpg",
+  },
+  {
+    name: "Paper Bomb(Small)",
+    price: 530,
+    category: "Paper Bombs",
+    image: "/images/Paperbombsmall.jpg",
+  },
+  {
+    name: "Paper Bomb(10Pcs)(Avathar)",
+    price: 1250,
+    category: "Paper Bombs",
+    image: "/images/Paperbomb10.jpg",
+  },
+
+  {
+    name: "Hot Cookies",
+    price: 1020,
+    category: "Chakkars",
+    image: "/images/Hotcookies.jpg",
+  },
+  {
+    name: "3 1/2\"Laxmi",
+    price: 70,
+    category: "One Sound Crackers",
+    image: "/images/2laxmi.jpg",
+  },
+  {
+    name: "Musical Jet",
+    price: 990,
+    category: "Rockets",
+    image: "/images/Musicaljet.jpg",
+  },
+  {
+    name: "Flower Pots Super Deluxe(5 Pcs)",
+    price: 850,
+    category: "Flower Pots",
+    image: "/images/Flowerpotsdeluxe.jpg",
+  },
+  {
+    name: "Mega Juke Box 40 shot",
+    price: 42750,
+    category: "Set Out",
+    image: "/images/Megajuke.jpg",
+  },
+  {
+    name: "Mega Monster 24 shot",
+    price: 40600,
+    category: "Set Out",
+    image: "/images/Megamonster.jpg",
+  },
+  {
+    name: "Mat Max 25 Shot",
+    price: 19375,
+    category: "Set Out",
+    image: "/images/Matmax.jpg",
+  },
+
+  {
+    name: "Star King",
+    price: 585,
+    category: "New Novelties",
+    image: "/images/Startking.jpg",
+  },
+
+  {
+    name: "Roll Cap",
+    price: 380,
+    category: "Color Matches",
+    image: "/images/Rollcap.jpg",
+  },
+
+  {
+    name: "12 Cm Aqua Blue Sparklers",
+    price: 200,
+    category: "Sparklers",
+    image: "/images/12cmblue.jpg",
+  },
+
+
+
+  {
+    name: "7 Shot(5Pcs)",
+    price: 610,
+    category: "Mini Aerial Fancy",
+    image: "/images/7Shot5.jpg",
+  },
+
+  {
+    name: "6\"\ Fancy(1Pcs)",
+    price: 5000,
+    category: "Aerial Magic Fancy",
+    image: "/images/6Fancy.jpg",
+  },
+
+  {
+    name: "Peacock",
+    price: 900,
+    category: "Fountains",
+    image: "/images/Peacock.jpg",
+  },
+
+  {
+    name: "Magic Pots(6Pcs)",
+    price: 800,
+    category: "Fountains",
+    image: "/images/Magicpots.jpg",
+  },
+
+  {
+    name: "Anaconda",
+    price: 350,
+    category: "Color Matches",
+    image: "/images/Anaconda.jpg",
+  },
+
+  {
+    name: "25 Shot Rider",
+    price: 1050,
+    category: "Repeating Shots",
+    image: "/images/25ShotRider.jpg",
+  },
+
+  {
+    name: "Perk/Kit Kat/Dairy Milk Fountain",
+    price: 975,
+    category: "Elite Series",
+    image: "/images/Perk.jpg",
+  },
+
+  {
+    name: "Magical Fountain",
+    price: 585,
+    category: "New Novelties",
+    image: "/images/MagicalFountain.jpg",
+  },
+
+  {
+    name: "Zumo 5X10",
+    price: 10250,
+    category: "Set Out",
+    image: "/images/Zumo.jpg",
+  },
+
+  {
+    name: "Penta 5(5Pcs)",
+    price: 755,
+    category: "Mini Aerial Fancy",
+    image: "/images/Penta.jpg",
+  },
+
+  {
+    name: "Pyro Party,Crackling Honda",
+    price: 5100,
+    category: "Set Out",
+    image: "/images/Pyro.jpg",
+  },
+
+  {
+    name: "75 Cm Electric Sparklers",
+    price: 1100,
+    category: "Sparklers",
+    image: "/images/75cm.jpg",
+  },
+
+  {
+    name: "Lunik Rocket",
+    price: 510,
+    category: "Rockets",
+    image: "/images/Lunik.jpg",
+  },
+
+  {
+    name: "Ganga Jamuna(5Pcs)",
+    price: 350,
+    category: "Fancy Novelties",
+    image: "/images/GangaJamuna.jpg",
+  },
+
+  {
+    name: "Disco Shower",
+    price: 500,
+    category: "Elite Series",
+    image: "/images/DiscoShower.jpg",
+  },
+
+  {
+    name: "7 Up Rainbow",
+    price: 650,
+    category: "Color Matches",
+    image: "/images/7Up.jpg",
   },
   
+  {
+    name: "Cyber Orbit",
+    price: 675,
+    category: "New Arrival",
+    image: "/images/CyberOrbit.jpg",
+  },
+
+  {
+    name: "50 Seconds Torch(5Pcs)",
+    price: 640,
+    category: "Candles & Twinkling Star",
+    image: "/images/50SecondsTorch.jpg",
+  },
+
+  {
+    name: "Bacardi Nites(100Shots Crackling)",
+    price: 12500,
+    category: "Repeating Shots",
+    image: "/images/Bacardi.jpg",
+  },
+
+  {
+    name: "Swing Pots/Rollick pop/Cha cha Pop",
+    price: 510,
+    category: "Fancy Novelties",
+    image: "/images/ChaChaPop.jpg",
+  },
+
+  {
+    name: "Selfie Stick",
+    price: 380,
+    category: "Elite Series",
+    image: "/images/SelfieStick.jpg",
+  },
+
+  {
+    name: "7 Cm Magic Pencil",
+    price: 150,
+    category: "Candles & Twinkling Star",
+    image: "/images/7CmMagicPencil.jpg",
+  },
+
+  {
+    name: "60 Shot I Max",
+    price: 5250,
+    category: "Repeating Shots",
+    image: "/images/60ShotImax.jpg",
+  },
+
+  {
+    name: "Snake Serpent Egg(Sony)(50Pcs)",
+    price: 190,
+    category: "Color Matches",
+    image: "/images/SnakeSerpent.jpg",
+  },
+
+  {
+    name: "Super Deluxe 10 in 1",
+    price: 330,
+    category: "Color Matches",
+    image: "/images/SuperDeluxe.jpg",
+  },
+
+  {
+    name: "Baby Matches",
+    price: 50,
+    category: "Color Matches",
+    image: "/images/BabyMatches.jpg",
+  },
+
+   {
+    name: "2\"\ Fancy(3 Pcs Mix)",
+    price: 2000,
+    category: "Aerial Magic Fancy",
+    image: "/images/2fancy3.jpg",
+  },
+
+  {
+    name: "2\"\ Fancy(2 Pcs Mix)",
+    price: 1635,
+    category: "Aerial Magic Fancy",
+    image: "/images/2fancy2.jpg",
+  },
+
+  {
+    name: "3\"\ Fancy(2 Pcs)",
+    price: 3000,
+    category: "Aerial Magic Fancy",
+    image: "/images/3fancy2.jpg",
+  },
   
+   {
+    name: "2\"\ Fancy(3 Step)",
+    price: 900,
+    category: "Aerial Magic Fancy",
+    image: "/images/2fancy3s.jpg",
+  },
+
+  {
+    name: "Magic Show(Money in Bank)(2Pcs)",
+    price: 1100,
+    category: "Paper Bombs",
+    image: "/images/Money.jpg",
+  },
+
+  {
+    name: "Pringles Mix & 5 Colors",
+    price: 180,
+    category: "Elite Series",
+    image: "/images/Pringlemix.jpg",
+  },
   // 🔽 Add more products here if needed
 ];
 
@@ -1552,6 +1840,7 @@ app.get("/api/reset-products", async (req, res) => {
 app.get("/api/products", async (req, res) => {
   try {
     const items = await Product.find();
+    console.log("Products:", items);
     res.json(items);
   } catch (err) {
     console.error("❌ Error fetching products:", err);

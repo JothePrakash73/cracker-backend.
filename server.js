@@ -1916,6 +1916,12 @@ app.get("/api/users", async (req, res) => {
 // ----------------- Health -----------------
 app.get("/api/health", (req, res) => res.json({ ok: true }));
 
+app.get("/", (req, res) => {
+  res.json({
+    message: "Cracker backend is running",
+    status: "OK"
+  });
+});
 // ----------------- Serve React -----------------
 if (process.env.NODE_ENV === "production") {
   const clientBuildPath = path.join(__dirname, "client", "build");

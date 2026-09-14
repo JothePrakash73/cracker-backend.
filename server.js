@@ -641,11 +641,11 @@ const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
 
 // ----------------- Ensure folders -----------------
 const uploadsPath = path.join(__dirname, "uploads");
-if (!fs.existsSync(uploadsPath)) fs.mkdirSync(uploadsPath, { recursive: true });
+
 app.use("/uploads", express.static(uploadsPath));
 
 const imagesPath = path.join(__dirname, "images");
-if (!fs.existsSync(imagesPath)) fs.mkdirSync(imagesPath, { recursive: true });
+
 app.use("/images", express.static(imagesPath));
 
 // ----------------- MongoDB -----------------
